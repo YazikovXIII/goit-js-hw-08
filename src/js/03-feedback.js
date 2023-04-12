@@ -19,12 +19,8 @@ function onLoad() {
   }
 }
 
-form.addEventListener('input', onInput);
+form.addEventListener('input', _.throttle(saveData, 2000));
 
-function onInput(evt) {
-  _.throttle(saveData, 2000)();
-}
-// Щось не так з тротл,прошу підказки.Будь ласка!
 function saveData() {
   const emailValue = email.value;
   const messageValue = message.value;
@@ -37,11 +33,13 @@ form.addEventListener('submit', onSub);
 function onSub(evt) {
   evt.preventDefault();
 
-  //   saveData(); ?
-
-  console.log('email :', email.value);
-  console.log('message :', message.value);
+  const EMAIL = email.value;
+  const MESSAGE = message.value;
+  const feedback = { EMAIL, MESSAGE };
+  console.log(feedback);
 
   email.value = '';
   message.value = '';
+
+  localStorage.removeItem('feedback-form-state');
 }

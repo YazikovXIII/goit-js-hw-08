@@ -1,4 +1,5 @@
 import Player from '@vimeo/player';
+import _ from 'lodash';
 
 const player = new Player('vimeo-player');
 
@@ -7,7 +8,7 @@ if (playedTime) {
   player.setCurrentTime(playedTime);
 }
 
-player.on('timeupdate', timeCheck);
+player.on('timeupdate', _.throttle(timeCheck, 1000));
 
 function timeCheck(data) {
   localStorage.setItem(
